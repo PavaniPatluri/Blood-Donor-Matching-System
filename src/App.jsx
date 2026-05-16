@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Activity } from 'lucide-react';
 import Hero from './components/Hero';
 import InfoSection from './components/InfoSection';
 import BloodChart from './components/BloodChart';
