@@ -22,8 +22,8 @@ export default function Login({ onLogin }) {
           <div className="icon-wrapper">
             <HeartPulse size={36} color="#ef4444" />
           </div>
-          <h2>System Access</h2>
-          <p>Enter your credentials to secure the network</p>
+          <h2>Life Drop Portal</h2>
+          <p>Enter your details to access the network</p>
         </div>
 
         {error && <div className="error-banner">{error}</div>}
