@@ -18,29 +18,27 @@ const Login = ({ onLogin }) => {
     <div className="login-container">
       <div className="login-card">
         <h2>Login to Blood Donor System</h2>
-        {error && <p className="error-message" style={{color: 'red'}}>{error}</p>}
+        {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
-          <div style={{marginBottom: '10px'}}>
-            <label style={{display: 'block'}}>Username</label>
+          <div>
+            <label>Username</label>
             <input 
               type="text" 
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter username"
-              style={{width: '100%', padding: '8px'}}
             />
           </div>
-          <div style={{marginBottom: '10px'}}>
-            <label style={{display: 'block'}}>Password</label>
+          <div>
+            <label>Password</label>
             <input 
               type="password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
-              style={{width: '100%', padding: '8px'}}
             />
           </div>
-          <button type="submit" style={{width: '100%', padding: '10px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px'}}>Login</button>
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>
