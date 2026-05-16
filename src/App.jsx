@@ -16,10 +16,12 @@ import DonorBenefits from './components/DonorBenefits';
 import DonorDiet from './components/DonorDiet';
 import Sidebar from './components/Sidebar';
 import Login from './components/Login';
+import GuidePopup from './components/GuidePopup';
 
 function App() {
   const [isEmergency, setIsEmergency] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
 
   const resetSystem = useCallback(() => {
     if (window.confirm("This will clear all donor data, registration history, and reset the application. Proceed?")) {
@@ -45,12 +47,13 @@ function App() {
   }, [isEmergency]);
 
   if (!isAuthenticated) {
-    return <Login onLogin={() => setIsAuthenticated(true)} />;
+    return <Login onLogin={() => { setIsAuthenticated(true); setShowGuide(true); }} />;
   }
 
   return (
     <div className={`app-container ${isEmergency ? 'emergency-mode' : ''}`} style={{ paddingLeft: '90px' }}>
       <Sidebar />
+      {showGuide && <GuidePopup onClose={() => setShowGuide(false)} />}
       <NotificationSystem />
       <EmergencyBanner
         isVisible={isEmergency}
