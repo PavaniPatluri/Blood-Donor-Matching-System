@@ -66,13 +66,13 @@ function App() {
             <div id="home"><Hero /></div>
             <div className="p-8 space-y-12">
               <div id="register"><DonorRegistration /></div>
+              <div id="matcher"><DonorMatcher /></div>
               <div className="flex justify-end">
                 <TrustScoreBadge score={92} donations={8} />
               </div>
               <div id="rewards"><RewardsDashboard /></div>
               <div id="map"><DonorMap /></div>
               <div id="activity"><LiveActivity /></div>
-              <div id="matcher"><DonorMatcher /></div>
             </div>
           </div>
         );
