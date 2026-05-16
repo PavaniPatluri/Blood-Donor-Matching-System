@@ -63,14 +63,10 @@ function App() {
       case 'donor':
         return (
           <div className="p-8 space-y-8">
-            <div className="flex justify-between items-center">
-              <h1 className="text-3xl font-bold">Donor Dashboard</h1>
+            <div className="flex justify-end">
               <TrustScoreBadge score={92} donations={8} />
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <EligibilityPredictor />
-              <div id="rewards"><RewardsDashboard /></div>
-            </div>
+            <div id="rewards"><RewardsDashboard /></div>
             <div id="map"><DonorMap /></div>
             <div id="matcher"><DonorMatcher /></div>
             <div id="register"><DonorRegistration /></div>
