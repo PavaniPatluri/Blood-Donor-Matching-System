@@ -15,9 +15,11 @@ import LiveActivity from './components/LiveActivity';
 import DonorBenefits from './components/DonorBenefits';
 import DonorDiet from './components/DonorDiet';
 import Sidebar from './components/Sidebar';
+import Login from './components/Login';
 
 function App() {
   const [isEmergency, setIsEmergency] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const resetSystem = useCallback(() => {
     if (window.confirm("This will clear all donor data, registration history, and reset the application. Proceed?")) {
@@ -41,6 +43,10 @@ function App() {
       document.body.style.color = 'var(--color-text)';
     }
   }, [isEmergency]);
+
+  if (!isAuthenticated) {
+    return <Login onLogin={() => setIsAuthenticated(true)} />;
+  }
 
   return (
     <div className={`app-container ${isEmergency ? 'emergency-mode' : ''}`} style={{ paddingLeft: '90px' }}>
