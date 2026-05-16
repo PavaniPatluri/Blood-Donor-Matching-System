@@ -17,6 +17,7 @@ import DonorDiet from './components/DonorDiet';
 import Sidebar from './components/Sidebar';
 import Login from './components/Login';
 import GuidePopup from './components/GuidePopup';
+import Chatbot from './components/Chatbot';
 
 function App() {
   const [isEmergency, setIsEmergency] = useState(false);
@@ -134,6 +135,7 @@ function App() {
           Reset Application Data (Dev Only)
         </button>
       </footer>
+      <Chatbot />
     </div>
   );
 }
