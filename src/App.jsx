@@ -71,8 +71,8 @@ function App() {
               </div>
               <div id="rewards"><RewardsDashboard /></div>
               <div id="map"><DonorMap /></div>
-              <div id="matcher"><DonorMatcher /></div>
               <div id="activity"><LiveActivity /></div>
+              <div id="matcher"><DonorMatcher /></div>
             </div>
           </div>
         );
