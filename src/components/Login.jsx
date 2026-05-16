@@ -38,7 +38,7 @@ export default function Login({ onLogin }) {
 
         {error && <div className="error-banner mb-6">{error}</div>}
 
-        <div className="role-selector grid grid-cols-2 gap-3 mb-8">
+        <div className="role-selector">
           {roles.map((r) => {
             const Icon = r.icon;
             const isActive = role === r.id;
@@ -47,14 +47,10 @@ export default function Login({ onLogin }) {
                 key={r.id}
                 type="button"
                 onClick={() => setRole(r.id)}
-                className={`group flex items-center justify-center gap-3 p-4 rounded-xl font-bold transition-all border-2 ${
-                  isActive 
-                    ? 'bg-rose-600 border-rose-600 text-white shadow-lg shadow-rose-200 scale-[1.02]' 
-                    : 'bg-white border-slate-100 text-slate-500 hover:border-rose-200 hover:bg-rose-50'
-                }`}
+                className={`role-button ${isActive ? 'active' : ''}`}
               >
-                <Icon size={20} className={isActive ? 'text-white' : 'text-slate-400 group-hover:text-rose-500'} />
-                <span className="text-xs uppercase tracking-tight">{r.label}</span>
+                <Icon size={18} />
+                <span>{r.label}</span>
               </button>
             );
           })}

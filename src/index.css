@@ -222,3 +222,50 @@ body {
 .login-submit-btn:hover {
   background-color: #dc2626;
 }
+
+/* --- ROLE SELECTOR STYLES --- */
+.role-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.role-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  background-color: white;
+  border: 2px solid #f3f4f6;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: bold;
+  color: #6b7280;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.025em;
+}
+
+.role-button:hover {
+  border-color: #fecaca;
+  background-color: #fff1f2;
+}
+
+.role-button.active {
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.2);
+  transform: translateY(-1px);
+}
+
+.role-button svg {
+  transition: color 0.2s;
+}
+
+.role-button.active svg {
+  color: white !important;
+}
