@@ -1,66 +1,108 @@
 import React, { useState } from 'react';
-import { HeartPulse, Lock, User } from 'lucide-react';
+import { HeartPulse, Lock, User, ShieldCheck, Activity, Building2, UserCog } from 'lucide-react';
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('donor');
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username === 'Username' && password === 'password') {
-      onLogin();
+    // Simple simulation: any username/password works for now for demo
+    // In real app, this would hit the backend
+    if (username && password) {
+      onLogin({ username, role });
     } else {
-      setError('Invalid credentials.');
+      setError('Please fill in all fields.');
     }
   };
 
+  const roles = [
+    { id: 'donor', label: 'Donor', icon: Activity, color: 'text-rose-500' },
+    { id: 'recipient', label: 'Recipient', icon: HeartPulse, color: 'text-rose-600' },
+    { id: 'hospital', label: 'Hospital/Bank', icon: Building2, color: 'text-blue-600' },
+    { id: 'admin', label: 'Administrator', icon: UserCog, color: 'text-slate-700' },
+  ];
+
   return (
-    <div className="login-wrapper">
-      <div className="login-box">
+    <div className="login-wrapper bg-slate-50">
+      <div className="login-box shadow-2xl border-0">
         <div className="login-header">
-          <div className="icon-wrapper">
-            <HeartPulse size={36} color="#ef4444" />
+          <div className="icon-wrapper bg-rose-50">
+            <HeartPulse size={36} className="text-rose-500" />
           </div>
-          <h2>Life Drop Portal</h2>
-          <p>Enter your details to access the network</p>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Life Drop Portal</h2>
+          <p className="text-slate-500 mt-2">Smart Healthcare Emergency Platform</p>
         </div>
 
-        {error && <div className="error-banner">{error}</div>}
+        {error && <div className="error-banner mb-6">{error}</div>}
+
+        <div className="role-selector flex justify-between gap-2 mb-8">
+          {roles.map((r) => {
+            const Icon = r.icon;
+            return (
+              <button
+                key={r.id}
+                onClick={() => setRole(r.id)}
+                className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all flex-1 ${
+                  role === r.id 
+                    ? 'border-rose-500 bg-rose-50 ring-2 ring-rose-200' 
+                    : 'border-slate-100 bg-white hover:border-rose-200'
+                }`}
+              >
+                <Icon size={24} className={role === r.id ? r.color : 'text-slate-400'} />
+                <span className={`text-[10px] font-bold mt-1 uppercase tracking-wider ${
+                  role === r.id ? 'text-rose-600' : 'text-slate-500'
+                }`}>
+                  {r.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="input-group">
-            <label>Username</label>
-            <div className="input-with-icon">
+            <label className="text-slate-700 font-semibold">Credential ID</label>
+            <div className="input-with-icon mt-1">
               <User size={18} className="input-icon" />
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
+                placeholder="Username or ID"
+                className="bg-slate-50 focus:bg-white focus:ring-rose-500"
                 required
               />
             </div>
           </div>
 
           <div className="input-group">
-            <label>Password</label>
-            <div className="input-with-icon">
+            <label className="text-slate-700 font-semibold">Access Key</label>
+            <div className="input-with-icon mt-1">
               <Lock size={18} className="input-icon" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="password"
+                placeholder="••••••••"
+                className="bg-slate-50 focus:bg-white focus:ring-rose-500"
                 required
               />
             </div>
           </div>
 
-          <button type="submit" className="login-submit-btn">
-            Enter Portal <Lock size={18} />
+          <button type="submit" className="login-submit-btn bg-rose-600 hover:bg-rose-700 transition-colors py-4 mt-4">
+            Access Dashboard <ShieldCheck size={18} />
           </button>
         </form>
+
+        <div className="mt-8 pt-6 border-t border-slate-100 text-center">
+          <p className="text-sm text-slate-500">
+            Don't have an account? <a href="#" className="text-rose-600 font-bold hover:underline">Register Now</a>
+          </p>
+        </div>
       </div>
     </div>
   );

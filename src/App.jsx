@@ -18,10 +18,16 @@ import Sidebar from './components/Sidebar';
 import Login from './components/Login';
 import GuidePopup from './components/GuidePopup';
 import Chatbot from './components/Chatbot';
+import EligibilityPredictor from './components/EligibilityPredictor';
+import TrustScoreBadge from './components/TrustScoreBadge';
+import SOSQRGenerator from './components/SOSQRGenerator';
+import EmergencyBroadcast from './components/EmergencyBroadcast';
+import RareBloodNetwork from './components/RareBloodNetwork';
+import DemandPrediction from './components/DemandPrediction';
 
 function App() {
   const [isEmergency, setIsEmergency] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
   const [showGuide, setShowGuide] = useState(false);
 
   const resetSystem = useCallback(() => {
@@ -47,13 +53,106 @@ function App() {
     }
   }, [isEmergency]);
 
-  if (!isAuthenticated) {
-    return <Login onLogin={() => { setIsAuthenticated(true); setShowGuide(true); }} />;
+  if (!user) {
+    return <Login onLogin={(userData) => { setUser(userData); setShowGuide(true); }} />;
   }
+
+  const renderDashboard = () => {
+    switch (user.role) {
+      case 'donor':
+        return (
+          <div className="p-8 space-y-8">
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-bold">Donor Dashboard</h1>
+              <TrustScoreBadge score={92} donations={8} />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <EligibilityPredictor />
+              <div id="rewards"><RewardsDashboard /></div>
+            </div>
+            <div id="map"><DonorMap /></div>
+            <div id="matcher"><DonorMatcher /></div>
+            <div id="register"><DonorRegistration /></div>
+            <div id="activity"><LiveActivity /></div>
+          </div>
+        );
+      case 'recipient':
+        return (
+          <div className="p-8 space-y-8">
+            <h1 className="text-3xl font-bold">Recipient Portal</h1>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <EmergencyBroadcast />
+              <SOSQRGenerator />
+            </div>
+            <div id="map"><DonorMap /></div>
+            <div id="matcher"><DonorMatcher /></div>
+          </div>
+        );
+      case 'hospital':
+        return (
+          <div className="p-8 space-y-8">
+            <h1 className="text-3xl font-bold">Hospital/Blood Bank Management</h1>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <DemandPrediction />
+              <div className="lg:col-span-2">
+                <RareBloodNetwork />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 className="text-slate-500 font-bold text-xs uppercase tracking-wider mb-2">Inventory Level</h3>
+                <div className="text-3xl font-bold text-emerald-600">Optimal</div>
+              </div>
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 className="text-slate-500 font-bold text-xs uppercase tracking-wider mb-2">Pending Verifications</h3>
+                <div className="text-3xl font-bold text-amber-500">12 Donors</div>
+              </div>
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 className="text-slate-500 font-bold text-xs uppercase tracking-wider mb-2">Active Shortages</h3>
+                <div className="text-3xl font-bold text-rose-600">O- Negative</div>
+              </div>
+            </div>
+            <div id="matcher"><DonorMatcher /></div>
+            <div id="map"><DonorMap /></div>
+          </div>
+        );
+      case 'admin':
+        return (
+          <div className="p-8 space-y-8">
+            <h1 className="text-3xl font-bold">System Administration</h1>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="bg-slate-900 text-white p-6 rounded-2xl">
+                <div className="text-slate-400 text-xs font-bold uppercase">Total Users</div>
+                <div className="text-2xl font-bold">1,248</div>
+              </div>
+              <div className="bg-slate-900 text-white p-6 rounded-2xl">
+                <div className="text-slate-400 text-xs font-bold uppercase">Emergency Matches</div>
+                <div className="text-2xl font-bold">42</div>
+              </div>
+              <div className="bg-slate-900 text-white p-6 rounded-2xl">
+                <div className="text-slate-400 text-xs font-bold uppercase">System Status</div>
+                <div className="text-2xl font-bold text-emerald-400">Online</div>
+              </div>
+              <div className="bg-slate-900 text-white p-6 rounded-2xl">
+                <div className="text-slate-400 text-xs font-bold uppercase">Security Threats</div>
+                <div className="text-2xl font-bold text-rose-400">0</div>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <DemandPrediction />
+              <RareBloodNetwork />
+            </div>
+            <LiveActivity />
+          </div>
+        );
+      default:
+        return <div>Invalid Role</div>;
+    }
+  };
 
   return (
     <div className={`app-container ${isEmergency ? 'emergency-mode' : ''}`} style={{ paddingLeft: '90px' }}>
-      <Sidebar />
+      <Sidebar role={user.role} />
       {showGuide && <GuidePopup onClose={() => setShowGuide(false)} />}
       <NotificationSystem />
       <EmergencyBanner
@@ -61,39 +160,8 @@ function App() {
         onClose={() => setIsEmergency(false)}
       />
 
-      <div id="home">
-        <Hero />
-      </div>
-      <InfoSection />
-
-      <main className="container">
-        <div id="map">
-          <DonorMap />
-        </div>
-        <div id="matcher">
-          <DonorMatcher />
-        </div>
-        <div id="appointments">
-          <AppointmentScheduler />
-        </div>
-      </main>
-
-      <div id="register">
-        <DonorRegistration />
-      </div>
-      <div id="benefits">
-        <DonorBenefits />
-      </div>
-      <div id="diet">
-        <DonorDiet />
-      </div>
-
-
-      <div id="rewards">
-        <RewardsDashboard />
-      </div>
-      <div id="activity">
-        <LiveActivity />
+      <div className="flex-1 overflow-y-auto">
+        {renderDashboard()}
       </div>
 
       <HealthMotivation />

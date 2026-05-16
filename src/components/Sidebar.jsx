@@ -15,20 +15,49 @@ import {
     LogOut
 } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ role }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const navItems = [
-        { id: 'home', icon: <Home size={20} />, label: 'Home' },
-        { id: 'map', icon: <MapPin size={20} />, label: 'Donor Map' },
-        { id: 'matcher', icon: <Users size={20} />, label: 'Match Center' },
-        { id: 'register', icon: <UserPlus size={20} />, label: 'Registration' },
-        { id: 'benefits', icon: <Heart size={20} />, label: 'Benefits' },
-        { id: 'appointments', icon: <Calendar size={20} />, label: 'Appointments' },
-        { id: 'rewards', icon: <Award size={20} />, label: 'Rewards & ID' },
-        { id: 'activity', icon: <Activity size={20} />, label: 'Live Activity' },
-        { id: 'diet', icon: <Utensils size={20} />, label: 'Diet Guide' },
-    ];
+    const getNavItems = () => {
+        const commonItems = [
+            { id: 'home', icon: <Home size={20} />, label: 'Home' },
+        ];
+
+        switch (role) {
+            case 'donor':
+                return [
+                    ...commonItems,
+                    { id: 'map', icon: <MapPin size={20} />, label: 'Donor Map' },
+                    { id: 'matcher', icon: <Users size={20} />, label: 'Match Center' },
+                    { id: 'register', icon: <UserPlus size={20} />, label: 'Registration' },
+                    { id: 'rewards', icon: <Award size={20} />, label: 'Rewards & ID' },
+                    { id: 'activity', icon: <Activity size={20} />, label: 'Live Activity' },
+                    { id: 'diet', icon: <Utensils size={20} />, label: 'Diet Guide' },
+                ];
+            case 'recipient':
+                return [
+                    ...commonItems,
+                    { id: 'map', icon: <MapPin size={20} />, label: 'Hospital Map' },
+                    { id: 'requests', icon: <Activity size={20} />, label: 'My Requests' },
+                ];
+            case 'hospital':
+                return [
+                    ...commonItems,
+                    { id: 'inventory', icon: <Activity size={20} />, label: 'Inventory' },
+                    { id: 'matcher', icon: <Users size={20} />, label: 'Donor Search' },
+                ];
+            case 'admin':
+                return [
+                    ...commonItems,
+                    { id: 'analytics', icon: <LayoutDashboard size={20} />, label: 'Analytics' },
+                    { id: 'users', icon: <Users size={20} />, label: 'Manage Users' },
+                ];
+            default:
+                return commonItems;
+        }
+    };
+
+    const navItems = getNavItems();
 
     const scrollToSection = (id) => {
         const element = document.getElementById(id);

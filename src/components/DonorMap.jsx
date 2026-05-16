@@ -50,6 +50,13 @@ const HOSPITALS = [
 
 const DonorMap = () => {
     const [activeHospital, setActiveHospital] = useState(HOSPITALS[0]);
+    const [heatmapMode, setHeatmapMode] = useState(false);
+
+    const HEATMAP_DATA = [
+        { top: '30%', left: '40%', intensity: 'high', label: 'Critical Shortage (O-)' },
+        { top: '60%', left: '20%', intensity: 'medium', label: 'Moderate Demand' },
+        { top: '20%', left: '70%', intensity: 'low', label: 'High Donor Density' },
+    ];
 
     return (
         <section style={{ padding: '6rem 0', backgroundColor: '#fdfdfd' }}>
@@ -57,12 +64,37 @@ const DonorMap = () => {
                 <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-primary)', fontSize: '0.875rem', fontWeight: 'bold', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                         <span style={{ width: '10px', height: '10px', backgroundColor: 'var(--color-primary)', borderRadius: '50%', display: 'inline-block', animation: 'pulse 1.5s infinite' }}></span>
-                        Live Facility Surveillance
+                        {heatmapMode ? 'Live Blood Supply Heatmap' : 'Live Facility Surveillance'}
                     </div>
-                    <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#111' }}>Regional Donor & Hospital Map</h2>
+                    <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#111' }}>
+                        {heatmapMode ? 'Regional Supply & Demand Analysis' : 'Regional Donor & Hospital Map'}
+                    </h2>
                     <p style={{ color: '#666', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
-                        Locate nearby hospitals with urgent blood requirements and navigate directly via Google Maps.
+                        {heatmapMode 
+                            ? 'AI-driven visualization of blood shortages and donor concentration across the region.'
+                            : 'Locate nearby hospitals with urgent blood requirements and navigate directly via Google Maps.'}
                     </p>
+                    
+                    <button 
+                        onClick={() => setHeatmapMode(!heatmapMode)}
+                        style={{
+                            marginTop: '2rem',
+                            padding: '0.75rem 1.5rem',
+                            borderRadius: '99px',
+                            backgroundColor: heatmapMode ? 'var(--color-primary)' : '#1e293b',
+                            color: 'white',
+                            border: 'none',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                        }}
+                    >
+                        <Activity size={18} />
+                        {heatmapMode ? 'Switch to Facility View' : 'Switch to Supply Heatmap'}
+                    </button>
                 </div>
 
                 <div style={{
@@ -79,8 +111,9 @@ const DonorMap = () => {
                     <div style={{
                         position: 'relative',
                         height: '600px',
-                        backgroundColor: '#f8fafc',
-                        overflow: 'hidden'
+                        backgroundColor: heatmapMode ? '#0f172a' : '#f8fafc',
+                        overflow: 'hidden',
+                        transition: 'background-color 0.5s ease'
                     }}>
                         {/* Map Background Grid */}
                         <div style={{
@@ -89,18 +122,57 @@ const DonorMap = () => {
                             left: 0,
                             right: 0,
                             bottom: 0,
-                            backgroundImage: 'radial-gradient(#e2e8f0 1.5px, transparent 1.5px)',
+                            backgroundImage: heatmapMode 
+                                ? 'radial-gradient(rgba(255,255,255,0.05) 1.5px, transparent 1.5px)'
+                                : 'radial-gradient(#e2e8f0 1.5px, transparent 1.5px)',
                             backgroundSize: '30px 30px',
                             opacity: 0.5
                         }}></div>
 
-                        {/* Animated Connection Lines (Mocking real-time routes) */}
-                        <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-                            <path d="M 20% 25% Q 40% 35% 65% 45%" fill="none" stroke="var(--color-primary)" strokeWidth="1" strokeDasharray="5,5" opacity="0.2" />
-                            <path d="M 65% 45% Q 50% 60% 35% 70%" fill="none" stroke="#3b82f6" strokeWidth="1" strokeDasharray="5,5" opacity="0.2" />
-                        </svg>
+                        {/* Heatmap Overlays */}
+                        {heatmapMode && HEATMAP_DATA.map((point, idx) => (
+                            <div key={idx} style={{
+                                position: 'absolute',
+                                top: point.top,
+                                left: point.left,
+                                width: '200px',
+                                height: '200px',
+                                transform: 'translate(-50%, -50%)',
+                                borderRadius: '50%',
+                                background: point.intensity === 'high' 
+                                    ? 'radial-gradient(circle, rgba(239,68,68,0.3) 0%, transparent 70%)'
+                                    : point.intensity === 'medium'
+                                    ? 'radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 70%)'
+                                    : 'radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 70%)',
+                                filter: 'blur(20px)',
+                                animation: 'pulse 3s infinite'
+                            }}>
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    color: 'white',
+                                    fontSize: '0.7rem',
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    whiteSpace: 'nowrap',
+                                    textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+                                }}>
+                                    {point.label}
+                                </div>
+                            </div>
+                        ))}
 
-                        {/* Hospital Pins */}
+                        {/* Animated Connection Lines */}
+                        {!heatmapMode && (
+                            <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+                                <path d="M 20% 25% Q 40% 35% 65% 45%" fill="none" stroke="var(--color-primary)" strokeWidth="1" strokeDasharray="5,5" opacity="0.2" />
+                                <path d="M 65% 45% Q 50% 60% 35% 70%" fill="none" stroke="#3b82f6" strokeWidth="1" strokeDasharray="5,5" opacity="0.2" />
+                            </svg>
+                        )}
+
+                        {/* Hospital Pins (Faded in Heatmap Mode) */}
                         {HOSPITALS.map(hosp => (
                             <div key={hosp.id} style={{
                                 position: 'absolute',
@@ -109,7 +181,8 @@ const DonorMap = () => {
                                 transform: 'translate(-50%, -100%)',
                                 cursor: 'pointer',
                                 zIndex: activeHospital.id === hosp.id ? 100 : 10,
-                                transition: 'all 0.3s ease'
+                                transition: 'all 0.3s ease',
+                                opacity: heatmapMode ? 0.4 : 1
                             }}
                                 onClick={() => setActiveHospital(hosp)}
                             >
@@ -119,7 +192,7 @@ const DonorMap = () => {
                                     alignItems: 'center'
                                 }}>
                                     {/* Tooltip on Pin */}
-                                    {activeHospital.id === hosp.id && (
+                                    {activeHospital.id === hosp.id && !heatmapMode && (
                                         <div style={{
                                             backgroundColor: '#1e293b',
                                             color: 'white',
@@ -151,7 +224,7 @@ const DonorMap = () => {
                                         <MapPin size={20} />
                                     </div>
                                     {/* Pulse Effect for High Urgency */}
-                                    {(hosp.urgency === 'High' || hosp.urgency === 'Critical') && (
+                                    {(hosp.urgency === 'High' || hosp.urgency === 'Critical') && !heatmapMode && (
                                         <div style={{
                                             position: 'absolute',
                                             width: '60px',
@@ -168,15 +241,31 @@ const DonorMap = () => {
                         ))}
 
                         {/* Legend */}
-                        <div style={{ position: 'absolute', bottom: '20px', left: '20px', backgroundColor: 'rgba(255,255,255,0.9)', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', backdropFilter: 'blur(4px)' }}>
-                            <div style={{ fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', color: '#64748b', marginBottom: '0.5rem' }}>LEGEND</div>
+                        <div style={{ position: 'absolute', bottom: '20px', left: '20px', backgroundColor: heatmapMode ? 'rgba(15,23,42,0.8)' : 'rgba(255,255,255,0.9)', padding: '1rem', borderRadius: '12px', border: heatmapMode ? '1px solid #334155' : '1px solid #e2e8f0', backdropFilter: 'blur(4px)', color: heatmapMode ? 'white' : '#1e293b' }}>
+                            <div style={{ fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', color: heatmapMode ? '#94a3b8' : '#64748b', marginBottom: '0.5rem' }}>{heatmapMode ? 'HEATMAP KEY' : 'LEGEND'}</div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
-                                    <div style={{ width: '12px', height: '12px', borderRadius: '3px', backgroundColor: 'var(--color-primary)' }}></div> Hospital / Bank
-                                </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
-                                    <div style={{ width: '12px', height: '12px', borderRadius: '3px', backgroundColor: '#e2e8f0', border: '1px solid var(--color-primary)' }}></div> Selected
-                                </div>
+                                {heatmapMode ? (
+                                    <>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                                            <div style={{ width: '12px', height: '12px', borderRadius: '3px', backgroundColor: '#ef4444' }}></div> Critical Shortage
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                                            <div style={{ width: '12px', height: '12px', borderRadius: '3px', backgroundColor: '#f59e0b' }}></div> Moderate Demand
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                                            <div style={{ width: '12px', height: '12px', borderRadius: '3px', backgroundColor: '#10b981' }}></div> High Supply
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                                            <div style={{ width: '12px', height: '12px', borderRadius: '3px', backgroundColor: 'var(--color-primary)' }}></div> Hospital / Bank
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                                            <div style={{ width: '12px', height: '12px', borderRadius: '3px', backgroundColor: '#e2e8f0', border: '1px solid var(--color-primary)' }}></div> Selected
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -185,9 +274,11 @@ const DonorMap = () => {
                     <div style={{ borderLeft: '1px solid #f1f5f9', display: 'flex', flexDirection: 'column' }}>
                         <div style={{ padding: '2rem', borderBottom: '1px solid #f1f5f9', backgroundColor: '#f8fafc' }}>
                             <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                <Activity size={20} color="var(--color-primary)" /> Nearby Facilities
+                                <Activity size={20} color="var(--color-primary)" /> {heatmapMode ? 'Shortage Analysis' : 'Nearby Facilities'}
                             </h3>
-                            <p style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '0.5rem' }}>Showing 4 medical units active in your area.</p>
+                            <p style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '0.5rem' }}>
+                                {heatmapMode ? 'Regional blood levels monitored in real-time.' : 'Showing 4 medical units active in your area.'}
+                            </p>
                         </div>
                         <div style={{ overflowY: 'auto', flex: 1, padding: '1.5rem' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -201,7 +292,8 @@ const DonorMap = () => {
                                             backgroundColor: hosp.id === activeHospital.id ? 'rgba(239, 68, 68, 0.02)' : 'white',
                                             cursor: 'pointer',
                                             transition: 'all 0.2s ease',
-                                            boxShadow: hosp.id === activeHospital.id ? '0 4px 12px rgba(239, 68, 68, 0.1)' : 'none'
+                                            boxShadow: hosp.id === activeHospital.id ? '0 4px 12px rgba(239, 68, 68, 0.1)' : 'none',
+                                            opacity: heatmapMode && hosp.urgency === 'Stable' ? 0.6 : 1
                                         }}
                                     >
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
@@ -271,6 +363,11 @@ const DonorMap = () => {
                 @keyframes slideIn {
                     from { opacity: 0; transform: translateX(-50%) translateY(10px); }
                     to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                }
+                @keyframes pulse {
+                    0% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+                    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+                    100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
                 }
             `}</style>
         </section>
