@@ -11,7 +11,8 @@ import {
     Menu,
     X,
     LayoutDashboard,
-    Utensils
+    Utensils,
+    LogOut
 } from 'lucide-react';
 
 const Sidebar = () => {
@@ -93,6 +94,19 @@ const Sidebar = () => {
 
                 <div style={footerStyle}>
                     <div style={dividerStyle} />
+                    
+                    <button 
+                        onClick={() => window.location.reload()}
+                        style={{...navItemStyle, color: '#ef4444', marginBottom: '1rem', padding: '0.75rem 0.6rem'}}
+                        title={!isExpanded ? 'Logout' : ''}
+                        className="logout-btn"
+                    >
+                        <div style={iconWrapperStyle}>
+                            <LogOut size={20} />
+                        </div>
+                        {isExpanded && <span style={labelStyle}>Logout</span>}
+                    </button>
+
                     <div style={footerContentStyle}>
                         <div style={statusDotStyle} />
                         {isExpanded && <span style={statusTextStyle}>System Active</span>}
