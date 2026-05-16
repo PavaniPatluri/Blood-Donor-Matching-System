@@ -24,4 +24,18 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  // Add these 5 lines right here:
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  if (!isAuthenticated) {
+    return <Login onLogin={() => setIsAuthenticated(true)} />;
+  }
+
+  // --- DO NOT DELETE ANYTHING BELOW THIS LINE ---
+  // Your existing return (...) statement should stay exactly the same!
+  return (
+      // ... your beautiful UI code ...
+  )
+}
+
