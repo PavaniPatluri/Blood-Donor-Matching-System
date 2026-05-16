@@ -42,3 +42,7 @@ If you need the data engine and unified view:
 - `run.py`: Automation script for development
 - `blood_donor_app.py`: Legacy unified script (for reference)
 
+## 📍 System Location
+`C:\Users\pavani\.gemini\antigravity\playground\white-cluster\blood-donor-system\`
+
+© 2026 Life Drop Network | Saving Lives with Precision.
