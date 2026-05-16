@@ -58,7 +58,7 @@ export default function Login({ onLogin }) {
           </div>
 
           <button type="submit" className="login-submit-btn">
-            Access Network <Lock size={18} />
+            Enter Portal <Lock size={18} />
           </button>
         </form>
       </div>
