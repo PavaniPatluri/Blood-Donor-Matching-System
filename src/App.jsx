@@ -78,30 +78,45 @@ function App() {
         );
       case 'recipient':
         return (
-          <div className="min-h-screen bg-slate-50/50 p-8 lg:p-12 space-y-12">
-            <header className="mb-10">
-              <h1 className="text-4xl font-black text-slate-900 tracking-tight">Recipient Portal</h1>
-              <p className="text-slate-500 mt-2 font-medium">Emergency Assistance & Rapid Response Tools</p>
+          <div className="min-h-screen bg-slate-50/50 p-6 lg:p-8 pt-4 space-y-8 relative">
+            <header className="sticky top-0 z-20 bg-slate-50/90 backdrop-blur-md py-4 border-b border-slate-200 -mx-8 px-8 mb-8">
+              <div className="flex justify-between items-center max-w-7xl mx-auto">
+                <div>
+                  <h1 className="text-3xl font-black text-slate-900 tracking-tight">Recipient Portal</h1>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold">Emergency Operations Hub</p>
+                </div>
+                <button className="bg-rose-600 text-white px-6 py-2 rounded-full text-xs font-black shadow-lg shadow-rose-200 hover:bg-rose-700 transition-all flex items-center gap-2">
+                  <Activity size={14} /> REPORT EMERGENCY
+                </button>
+              </div>
             </header>
             
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 max-w-7xl mx-auto">
-              <div className="space-y-6">
-                <h3 className="text-sm font-black uppercase tracking-widest text-rose-600">Priority Action</h3>
-                <EmergencyBroadcast />
-              </div>
-              <div className="space-y-6">
-                <h3 className="text-sm font-black uppercase tracking-widest text-slate-400">Identity & SOS</h3>
-                <SOSQRGenerator />
-              </div>
-            </div>
-
-            <div className="space-y-8 mt-16 max-w-7xl mx-auto">
-              <h2 className="text-2xl font-bold text-slate-800">Available Resources</h2>
-              <div className="grid grid-cols-1 gap-10">
-                <div id="map" className="rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
-                  <DonorMap />
+            <div className="max-w-7xl mx-auto grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
+              <div className="xl:col-span-2 space-y-8">
+                <div className="space-y-4">
+                  <h3 className="text-[10px] font-black uppercase tracking-widest text-rose-600">Quick Response</h3>
+                  <EmergencyBroadcast />
                 </div>
-                <div id="matcher"><DonorMatcher /></div>
+                
+                <div className="space-y-4">
+                  <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Surveillance</h3>
+                  <div id="map" className="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 h-[600px]">
+                    <DonorMap />
+                  </div>
+                </div>
+                
+                <div id="matcher" className="mt-8"><DonorMatcher /></div>
+              </div>
+
+              <div className="sticky top-28 space-y-4">
+                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Emergency Identity</h3>
+                <SOSQRGenerator />
+                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                  <h4 className="font-bold text-slate-800 mb-2">Instructions</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed">
+                    Keep this card visible while navigating. Use the **Broadcast** button to alert donors instantly if your situation escalates.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
