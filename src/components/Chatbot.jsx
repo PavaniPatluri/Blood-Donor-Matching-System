@@ -17,12 +17,11 @@ export default function Chatbot() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = (e) => {
-    e.preventDefault();
-    if (!inputValue.trim()) return;
+  const sendMessage = (text) => {
+    if (!text.trim()) return;
 
     // Add user message
-    const newUserMsg = { id: Date.now(), text: inputValue, sender: 'user' };
+    const newUserMsg = { id: Date.now(), text, sender: 'user' };
     setMessages(prev => [...prev, newUserMsg]);
     setInputValue('');
 
@@ -30,7 +29,7 @@ export default function Chatbot() {
     setTimeout(() => {
       let botResponse = "I'm an AI assistant. I'm currently in demo mode, but I'll be able to help you with portal queries soon!";
       
-      const lowerInput = newUserMsg.text.toLowerCase();
+      const lowerInput = text.toLowerCase();
       if (lowerInput.includes('map') || lowerInput.includes('location') || lowerInput.includes('near')) {
         botResponse = "You can find nearby blood banks and donors using the Live Donor Map feature on your dashboard.";
       } else if (lowerInput.includes('appointment') || lowerInput.includes('schedule') || lowerInput.includes('book')) {
@@ -44,6 +43,18 @@ export default function Chatbot() {
       setMessages(prev => [...prev, { id: Date.now(), text: botResponse, sender: 'bot' }]);
     }, 800);
   };
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    sendMessage(inputValue);
+  };
+
+  const quickQueries = [
+    "How to book an appointment?",
+    "Where is the nearest blood bank?",
+    "How do reward points work?",
+    "How to trigger an emergency?"
+  ];
 
   return (
     <>
@@ -95,6 +106,21 @@ export default function Chatbot() {
             ))}
             <div ref={messagesEndRef} />
           </div>
+
+          {/* Quick Queries */}
+          {messages.length === 1 && (
+            <div style={quickQueriesStyle}>
+              {quickQueries.map((query, idx) => (
+                <button 
+                  key={idx} 
+                  style={quickQueryBtnStyle}
+                  onClick={() => sendMessage(query)}
+                >
+                  {query}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Input Area */}
           <form onSubmit={handleSend} style={inputAreaStyle}>
@@ -224,4 +250,23 @@ const sendBtnStyle = {
   alignItems: 'center',
   cursor: 'pointer',
   transition: 'opacity 0.2s'
+};
+
+const quickQueriesStyle = {
+  padding: '0 1rem 1rem 1rem',
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '0.5rem',
+  backgroundColor: '#fafafa'
+};
+
+const quickQueryBtnStyle = {
+  backgroundColor: '#fff',
+  border: '1px solid #ef4444',
+  color: '#ef4444',
+  padding: '0.4rem 0.8rem',
+  borderRadius: '16px',
+  fontSize: '0.8rem',
+  cursor: 'pointer',
+  transition: 'all 0.2s'
 };
