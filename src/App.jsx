@@ -83,34 +83,6 @@ function App() {
             <div id="matcher"><DonorMatcher /></div>
           </div>
         );
-      case 'hospital':
-        return (
-          <div className="p-8 space-y-8">
-            <h1 className="text-3xl font-bold">Hospital/Blood Bank Management</h1>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <DemandPrediction />
-              <div className="lg:col-span-2">
-                <RareBloodNetwork />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <h3 className="text-slate-500 font-bold text-xs uppercase tracking-wider mb-2">Inventory Level</h3>
-                <div className="text-3xl font-bold text-emerald-600">Optimal</div>
-              </div>
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <h3 className="text-slate-500 font-bold text-xs uppercase tracking-wider mb-2">Pending Verifications</h3>
-                <div className="text-3xl font-bold text-amber-500">12 Donors</div>
-              </div>
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <h3 className="text-slate-500 font-bold text-xs uppercase tracking-wider mb-2">Active Shortages</h3>
-                <div className="text-3xl font-bold text-rose-600">O- Negative</div>
-              </div>
-            </div>
-            <div id="matcher"><DonorMatcher /></div>
-            <div id="map"><DonorMap /></div>
-          </div>
-        );
       case 'admin':
         return (
           <div className="p-8 space-y-8">

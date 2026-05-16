@@ -21,7 +21,6 @@ export default function Login({ onLogin }) {
   const roles = [
     { id: 'donor', label: 'Donor', icon: Activity, color: 'text-rose-500' },
     { id: 'recipient', label: 'Recipient', icon: HeartPulse, color: 'text-rose-600' },
-    { id: 'hospital', label: 'Hospital/Bank', icon: Building2, color: 'text-blue-600' },
     { id: 'admin', label: 'Administrator', icon: UserCog, color: 'text-slate-700' },
   ];
 

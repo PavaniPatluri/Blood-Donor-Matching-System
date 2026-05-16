@@ -40,12 +40,6 @@ const Sidebar = ({ role }) => {
                     { id: 'map', icon: <MapPin size={20} />, label: 'Hospital Map' },
                     { id: 'requests', icon: <Activity size={20} />, label: 'My Requests' },
                 ];
-            case 'hospital':
-                return [
-                    ...commonItems,
-                    { id: 'inventory', icon: <Activity size={20} />, label: 'Inventory' },
-                    { id: 'matcher', icon: <Users size={20} />, label: 'Donor Search' },
-                ];
             case 'admin':
                 return [
                     ...commonItems,
