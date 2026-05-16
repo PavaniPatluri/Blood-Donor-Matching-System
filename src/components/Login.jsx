@@ -38,25 +38,34 @@ export default function Login({ onLogin }) {
 
         {error && <div className="error-banner mb-6">{error}</div>}
 
-        <div className="role-selector flex justify-between gap-2 mb-8">
+        <div className="role-selector grid grid-cols-2 gap-4 mb-8">
           {roles.map((r) => {
             const Icon = r.icon;
+            const isActive = role === r.id;
             return (
               <button
                 key={r.id}
+                type="button"
                 onClick={() => setRole(r.id)}
-                className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all flex-1 ${
-                  role === r.id 
-                    ? 'border-rose-500 bg-rose-50 ring-2 ring-rose-200' 
-                    : 'border-slate-100 bg-white hover:border-rose-200'
+                className={`group flex flex-col items-center justify-center p-6 rounded-2xl border-2 transition-all ${
+                  isActive 
+                    ? 'border-rose-500 bg-rose-50/50 shadow-md ring-1 ring-rose-200' 
+                    : 'border-slate-100 bg-white hover:border-rose-200 hover:bg-slate-50 shadow-sm'
                 }`}
               >
-                <Icon size={24} className={role === r.id ? r.color : 'text-slate-400'} />
-                <span className={`text-[10px] font-bold mt-1 uppercase tracking-wider ${
-                  role === r.id ? 'text-rose-600' : 'text-slate-500'
+                <div className={`p-3 rounded-2xl mb-3 transition-colors ${
+                  isActive ? 'bg-rose-500 text-white' : 'bg-slate-100 text-slate-400 group-hover:bg-rose-100 group-hover:text-rose-500'
                 }`}>
-                  {r.label}
-                </span>
+                  <Icon size={28} />
+                </div>
+                <div className="text-center">
+                  <div className={`text-[10px] font-black uppercase tracking-widest leading-none ${
+                    isActive ? 'text-rose-600' : 'text-slate-500'
+                  }`}>
+                    {r.label}
+                  </div>
+                  <div className="text-[9px] text-slate-400 font-medium mt-1 uppercase tracking-tighter">Access</div>
+                </div>
               </button>
             );
           })}
