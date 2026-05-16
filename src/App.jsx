@@ -78,14 +78,32 @@ function App() {
         );
       case 'recipient':
         return (
-          <div className="p-8 space-y-8">
-            <h1 className="text-3xl font-bold">Recipient Portal</h1>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <EmergencyBroadcast />
-              <SOSQRGenerator />
+          <div className="min-h-screen bg-slate-50/50 p-8 lg:p-12 space-y-12">
+            <header className="mb-10">
+              <h1 className="text-4xl font-black text-slate-900 tracking-tight">Recipient Portal</h1>
+              <p className="text-slate-500 mt-2 font-medium">Emergency Assistance & Rapid Response Tools</p>
+            </header>
+            
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 max-w-7xl mx-auto">
+              <div className="space-y-6">
+                <h3 className="text-sm font-black uppercase tracking-widest text-rose-600">Priority Action</h3>
+                <EmergencyBroadcast />
+              </div>
+              <div className="space-y-6">
+                <h3 className="text-sm font-black uppercase tracking-widest text-slate-400">Identity & SOS</h3>
+                <SOSQRGenerator />
+              </div>
             </div>
-            <div id="map"><DonorMap /></div>
-            <div id="matcher"><DonorMatcher /></div>
+
+            <div className="space-y-8 mt-16 max-w-7xl mx-auto">
+              <h2 className="text-2xl font-bold text-slate-800">Available Resources</h2>
+              <div className="grid grid-cols-1 gap-10">
+                <div id="map" className="rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
+                  <DonorMap />
+                </div>
+                <div id="matcher"><DonorMatcher /></div>
+              </div>
+            </div>
           </div>
         );
       case 'hospital':
