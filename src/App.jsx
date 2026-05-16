@@ -80,10 +80,7 @@ function App() {
       case 'recipient':
         return (
           <div className="p-8 space-y-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <EmergencyBroadcast />
-              <div id="map"><DonorMap /></div>
-            </div>
+            <div id="map"><DonorMap /></div>
             <div id="matcher"><DonorMatcher /></div>
           </div>
         );
