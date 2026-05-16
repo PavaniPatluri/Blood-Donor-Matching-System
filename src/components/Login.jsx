@@ -38,7 +38,7 @@ export default function Login({ onLogin }) {
 
         {error && <div className="error-banner mb-6">{error}</div>}
 
-        <div className="role-selector grid grid-cols-2 gap-4 mb-8">
+        <div className="role-selector grid grid-cols-2 gap-3 mb-8">
           {roles.map((r) => {
             const Icon = r.icon;
             const isActive = role === r.id;
@@ -47,25 +47,14 @@ export default function Login({ onLogin }) {
                 key={r.id}
                 type="button"
                 onClick={() => setRole(r.id)}
-                className={`group flex flex-col items-center justify-center p-6 rounded-2xl border-2 transition-all ${
+                className={`group flex items-center justify-center gap-3 p-4 rounded-xl font-bold transition-all border-2 ${
                   isActive 
-                    ? 'border-rose-500 bg-rose-50/50 shadow-md ring-1 ring-rose-200' 
-                    : 'border-slate-100 bg-white hover:border-rose-200 hover:bg-slate-50 shadow-sm'
+                    ? 'bg-rose-600 border-rose-600 text-white shadow-lg shadow-rose-200 scale-[1.02]' 
+                    : 'bg-white border-slate-100 text-slate-500 hover:border-rose-200 hover:bg-rose-50'
                 }`}
               >
-                <div className={`p-3 rounded-2xl mb-3 transition-colors ${
-                  isActive ? 'bg-rose-500 text-white' : 'bg-slate-100 text-slate-400 group-hover:bg-rose-100 group-hover:text-rose-500'
-                }`}>
-                  <Icon size={28} />
-                </div>
-                <div className="text-center">
-                  <div className={`text-[10px] font-black uppercase tracking-widest leading-none ${
-                    isActive ? 'text-rose-600' : 'text-slate-500'
-                  }`}>
-                    {r.label}
-                  </div>
-                  <div className="text-[9px] text-slate-400 font-medium mt-1 uppercase tracking-tighter">Access</div>
-                </div>
+                <Icon size={20} className={isActive ? 'text-white' : 'text-slate-400 group-hover:text-rose-500'} />
+                <span className="text-xs uppercase tracking-tight">{r.label}</span>
               </button>
             );
           })}
