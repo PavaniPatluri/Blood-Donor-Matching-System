@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { HeartPulse, Lock, User, ShieldCheck, Activity, Building2, UserCog } from 'lucide-react';
+import { HeartPulse, Lock, User, ShieldCheck, Activity, Eye, EyeOff } from 'lucide-react';
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('donor');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,16 +73,24 @@ export default function Login({ onLogin }) {
 
           <div className="input-group">
             <label className="text-slate-700 font-semibold">Access Key</label>
-            <div className="input-with-icon mt-1">
+            <div className="input-with-icon mt-1 relative">
               <Lock size={18} className="input-icon" />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="bg-slate-50 focus:bg-white focus:ring-rose-500"
+                className="bg-slate-50 focus:bg-white focus:ring-rose-500 pr-12"
                 required
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-rose-500 transition-colors"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           </div>
 
