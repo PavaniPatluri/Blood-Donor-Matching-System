@@ -5,7 +5,7 @@ const EmergencyControl = ({ isEmergency, onToggle }) => {
     return (
         <div style={{
             position: 'fixed',
-            bottom: '2rem',
+            top: '2rem',
             right: '2rem',
             zIndex: 1000
         }}>
