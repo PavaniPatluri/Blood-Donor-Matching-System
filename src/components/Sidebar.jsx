@@ -40,12 +40,6 @@ const Sidebar = ({ role }) => {
                     { id: 'map', icon: <MapPin size={20} />, label: 'Hospital Map' },
                     { id: 'requests', icon: <Activity size={20} />, label: 'My Requests' },
                 ];
-            case 'admin':
-                return [
-                    ...commonItems,
-                    { id: 'analytics', icon: <LayoutDashboard size={20} />, label: 'Analytics' },
-                    { id: 'users', icon: <Users size={20} />, label: 'Manage Users' },
-                ];
             default:
                 return commonItems;
         }

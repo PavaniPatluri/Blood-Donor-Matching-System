@@ -83,35 +83,6 @@ function App() {
             <div id="matcher"><DonorMatcher /></div>
           </div>
         );
-      case 'admin':
-        return (
-          <div className="p-8 space-y-8">
-            <h1 className="text-3xl font-bold">System Administration</h1>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-slate-900 text-white p-6 rounded-2xl">
-                <div className="text-slate-400 text-xs font-bold uppercase">Total Users</div>
-                <div className="text-2xl font-bold">1,248</div>
-              </div>
-              <div className="bg-slate-900 text-white p-6 rounded-2xl">
-                <div className="text-slate-400 text-xs font-bold uppercase">Emergency Matches</div>
-                <div className="text-2xl font-bold">42</div>
-              </div>
-              <div className="bg-slate-900 text-white p-6 rounded-2xl">
-                <div className="text-slate-400 text-xs font-bold uppercase">System Status</div>
-                <div className="text-2xl font-bold text-emerald-400">Online</div>
-              </div>
-              <div className="bg-slate-900 text-white p-6 rounded-2xl">
-                <div className="text-slate-400 text-xs font-bold uppercase">Security Threats</div>
-                <div className="text-2xl font-bold text-rose-400">0</div>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <DemandPrediction />
-              <RareBloodNetwork />
-            </div>
-            <LiveActivity />
-          </div>
-        );
       default:
         return <div>Invalid Role</div>;
     }
