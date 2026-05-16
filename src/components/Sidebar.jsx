@@ -27,9 +27,9 @@ const Sidebar = ({ role }) => {
             case 'donor':
                 return [
                     ...commonItems,
+                    { id: 'register', icon: <UserPlus size={20} />, label: 'Registration' },
                     { id: 'map', icon: <MapPin size={20} />, label: 'Donor Map' },
                     { id: 'matcher', icon: <Users size={20} />, label: 'Match Center' },
-                    { id: 'register', icon: <UserPlus size={20} />, label: 'Registration' },
                     { id: 'rewards', icon: <Award size={20} />, label: 'Rewards & ID' },
                     { id: 'activity', icon: <Activity size={20} />, label: 'Live Activity' },
                     { id: 'diet', icon: <Utensils size={20} />, label: 'Diet Guide' },

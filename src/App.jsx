@@ -62,15 +62,18 @@ function App() {
     switch (user.role) {
       case 'donor':
         return (
-          <div className="p-8 space-y-8">
-            <div className="flex justify-end">
-              <TrustScoreBadge score={92} donations={8} />
+          <div className="space-y-0">
+            <div id="home"><Hero /></div>
+            <div className="p-8 space-y-12">
+              <div id="register"><DonorRegistration /></div>
+              <div className="flex justify-end">
+                <TrustScoreBadge score={92} donations={8} />
+              </div>
+              <div id="rewards"><RewardsDashboard /></div>
+              <div id="map"><DonorMap /></div>
+              <div id="matcher"><DonorMatcher /></div>
+              <div id="activity"><LiveActivity /></div>
             </div>
-            <div id="rewards"><RewardsDashboard /></div>
-            <div id="map"><DonorMap /></div>
-            <div id="matcher"><DonorMatcher /></div>
-            <div id="register"><DonorRegistration /></div>
-            <div id="activity"><LiveActivity /></div>
           </div>
         );
       case 'recipient':
